@@ -1,19 +1,26 @@
-extern crate rspotify;
-extern crate serde_json;
-
-use crate::app::App;
-use futures::{FutureExt, TryStreamExt};
-use rspotify::{model::SimplifiedAlbum, prelude::*, ClientCredsSpotify, ClientError, Credentials};
-use serde_json::{json, Value};
+use rspotify::prelude::*;
 use std::env;
-use std::fs::File;
-use std::io::BufReader;
-use std::io::Write;
-use std::path::PathBuf;
+
+use super::{
+    json,
+    App,
+    BufReader,
+    ClientCredsSpotify,
+    Credentials,
+    File,
+    FutureExt,
+    PathBuf,
+    //
+    Result,
+    SimplifiedAlbum,
+    TryStreamExt,
+    Value,
+    Write,
+};
 
 /// Fetches a list of new releases from Spotify and stores them for later use
 #[tokio::main]
-pub async fn new_releases(app: &mut App) -> Result<(), ClientError> {
+pub async fn new_releases(app: &mut App) -> Result<()> {
     let client_id = &app.client_id;
     let client_secret_id = &app.client_secret;
 
