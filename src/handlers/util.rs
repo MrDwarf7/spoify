@@ -1,9 +1,7 @@
 use ratatui::widgets::{ListState, TableState};
 
-use crate::{
-    app::App,
-    enums::{InputMode, SearchMenu},
-};
+use super::*;
+// use crate::{app::App, enums::InputMode};
 
 // Helper functions for cursor movement and character deletion
 pub fn move_cursor_left(app: &mut App) {

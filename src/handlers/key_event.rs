@@ -9,7 +9,7 @@ use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
 use std::io::{self, Write};
 
 /// Function to handle key events for the application
-pub fn handle_key_event(app: &mut App, key_event: KeyEvent) {
+pub fn handle_key_event(app: &mut App, key_event: KeyEvent) -> Result<()> {
     let go_to_search_key: char = app.go_to_search_key;
     let go_to_library_key: char = app.go_to_library_key;
     let go_to_user_playlists_key: char = app.go_to_user_playlists_key;
@@ -429,14 +429,11 @@ pub fn handle_key_event(app: &mut App, key_event: KeyEvent) {
                                 );
                         }
                     }
-                    if app.search_menu == SearchMenu::SearchedAlbum {
-                        if app.searched_album_selected {
-                            (app.searched_album_state, app.searched_album_index) =
-                                down_key_for_table(
-                                    app.selected_album_tracks_names.clone(),
-                                    app.searched_album_state.clone(),
-                                );
-                        }
+                    if app.search_menu == SearchMenu::SearchedAlbum && app.searched_album_selected {
+                        (app.searched_album_state, app.searched_album_index) = down_key_for_table(
+                            app.selected_album_tracks_names.clone(),
+                            app.searched_album_state.clone(),
+                        );
                     }
                     if app.search_menu == SearchMenu::SearchedArtist {
                         if app.searched_artist_selected {
@@ -1025,6 +1022,7 @@ pub fn handle_key_event(app: &mut App, key_event: KeyEvent) {
             _ => {}
         }
     }
+    Ok(())
 }
 
 /// Function to handle search input and related key events
