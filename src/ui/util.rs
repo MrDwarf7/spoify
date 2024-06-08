@@ -335,7 +335,7 @@ pub fn made_fy_table_ui(
         .iter()
         .enumerate()
         .zip(track_total.iter())
-        .map(|((index, name), track_total)| (index + 1, name.clone(), track_total.clone()))
+        .map(|((index, name), track_total)| (index + 1, name.clone(), *track_total))
         .collect();
 
     let table = Table::new(
