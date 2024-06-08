@@ -1,5 +1,3 @@
-extern crate indoc;
-
 use indoc::indoc;
 use itertools::izip;
 use ratatui::{
