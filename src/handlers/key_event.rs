@@ -2,53 +2,9 @@ use super::util::{
     default, default_nav, default_search, delete_char, down_key_for_list, down_key_for_table,
     move_cursor_left, move_cursor_right, reset_cursor, up_key_for_list, up_key_for_table,
 };
-use crate::app::App;
-use crate::enums::{InputMode, Library, Menu, SearchMenu};
-use crate::spotify::library_section::made_fy::{made_fy, process_made_fy};
-use crate::spotify::library_section::made_fy_tracks::{
-    fetch_made_fy_tracks, process_made_fy_tracks,
-};
-use crate::spotify::library_section::user_album_tracks::{
-    process_user_album_tracks, user_album_tracks,
-};
-use crate::spotify::library_section::user_artist_tracks::{
-    process_user_artist_tracks, user_artist_tracks,
-};
-use crate::spotify::library_section::{
-    liked_songs::{liked_tracks, process_liked_tracks},
-    podcast::{process_podcasts, user_podcast},
-    recently_played::{process_recently_played, recently_played},
-    user_albums::{process_user_albums, user_albums},
-    user_artists::{process_user_artists, user_artists},
-};
-use crate::spotify::new_release_section::new_releases_tracks::{
-    new_releases_tracks, process_new_releases_tracks,
-};
-use crate::spotify::player::next_track::next_track;
-use crate::spotify::player::previous_track::previous_track;
-use crate::spotify::player::start_playback::start_playback;
-use crate::spotify::player::volume_decrease::volume_decreament;
-use crate::spotify::player::volume_increase::volume_increment;
-use crate::spotify::player::{
-    pause_playback::pause, play_playback::play, repeat::cycle_repeat, shuffle::toogle_shuffle,
-};
-use crate::spotify::playlist_control::add_track_to_playlist::add_track_to_playlist;
-use crate::spotify::playlist_control::playlist_follow::follow_playlist;
-use crate::spotify::playlist_control::playlist_unfollow::unfollow_playlist;
-use crate::spotify::search::search::process_search;
-use crate::spotify::search::search_albums::{
-    process_selected_album_tracks, search_selected_album_tracks,
-};
-use crate::spotify::search::search_artists::{
-    process_selected_artist_tracks, search_selected_artist_tracks,
-};
-use crate::spotify::search::search_playlists::{
-    process_selected_playlist_tracks, search_selected_playlist_tracks,
-};
-use crate::spotify::user_playlist::user_playlist::{get_playlists, process_user_playlists};
-use crate::spotify::user_playlist::user_playlist_track::{
-    fetch_playlists_tracks, process_playlist_tracks,
-};
+
+use super::*;
+// use crate::Result;
 use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
 use std::io::{self, Write};
 
