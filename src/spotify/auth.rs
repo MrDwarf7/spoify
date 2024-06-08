@@ -1,7 +1,5 @@
-extern crate rspotify;
-
 use rspotify::prelude::OAuthClient;
-use rspotify::{scopes, AuthCodeSpotify, ClientError, Credentials, OAuth};
+use rspotify::{scopes, AuthCodeSpotify, Credentials, OAuth};
 use std::env;
 use std::fs;
 use std::io::stdin;
@@ -9,10 +7,11 @@ use std::path::PathBuf;
 use url::Url;
 use webbrowser;
 
+use super::Result;
 use crate::app::App;
 
 // Function to get the Spotify client, either from a cached token or through the authorization flow
-pub async fn get_spotify_client(app: &mut App) -> Result<AuthCodeSpotify, ClientError> {
+pub async fn get_spotify_client(app: &mut App) -> Result<AuthCodeSpotify> {
     let client_id = &app.client_id;
     let client_secret_id = &app.client_secret;
 
@@ -78,7 +77,7 @@ pub async fn get_spotify_client(app: &mut App) -> Result<AuthCodeSpotify, Client
 }
 
 // Function to handle the authorization flow with Spotify
-async fn handle_authorization_flow(spotify: &mut AuthCodeSpotify) -> Result<(), ClientError> {
+async fn handle_authorization_flow(spotify: &mut AuthCodeSpotify) -> Result<()> {
     let auth_url = spotify.get_authorize_url(true).unwrap(); // Getting the authorization URL
 
     if webbrowser::open(&auth_url).is_err() {
