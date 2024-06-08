@@ -1,4 +1,10 @@
-use std::io;
+#![feature(error_generic_member_access)]
+mod error;
+mod prelude;
+
+
+pub use self::prelude::{Error, Result, W};
+
 use std::sync::mpsc;
 use std::thread;
 
@@ -16,7 +22,7 @@ mod spotify;
 mod ui;
 mod util;
 
-fn main() -> io::Result<()> {
+fn main() -> Result<()> {
     let mut app: App = App::default();
 
     app.file_name = "spoify-0.2.0".to_string();
@@ -25,7 +31,7 @@ fn main() -> io::Result<()> {
     read_creds(&mut app);
     set_creds(&mut app);
 
-    if app.client_id == "" {
+    if app.client_id.is_empty() || app.client_secret.is_empty() {
         instruction();
         save_creds_to_yml(&mut app);
     } else {
