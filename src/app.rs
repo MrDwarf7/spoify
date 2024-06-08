@@ -1,6 +1,6 @@
 use crate::enums::{InputMode, Library, Menu, SearchMenu};
-use crate::handlers::key_event::handle_key_event;
-use crate::handlers::key_event::search_input;
+use crate::handlers::handle_key_event;
+use crate::handlers::search_input;
 use crate::spotify::player::player::process_currently_playing;
 use crate::ui::tui;
 use crate::ui::ui::render_frame;
