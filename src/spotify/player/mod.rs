@@ -9,3 +9,7 @@ pub mod start_playback;
 pub mod util;
 pub mod volume_decrease;
 pub mod volume_increase;
+
+pub use crate::spotify::SpotifyError;
+
+type Result<T> = std::result::Result<T, SpotifyError>;
