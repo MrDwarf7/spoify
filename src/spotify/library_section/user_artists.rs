@@ -1,16 +1,21 @@
-use crate::app::App;
-use crate::spotify::auth::get_spotify_client;
-use rspotify::model::FullArtist;
-use rspotify::prelude::OAuthClient;
-use rspotify::ClientError;
-use serde_json::{json, Value};
-use std::fs::File;
-use std::io::{BufReader, Write};
-use std::path::PathBuf;
+use super::{
+    get_spotify_client,
+    json,
+    App,
+    BufReader,
+    File,
+    FullArtist,
+    OAuthClient,
+    PathBuf,
+    //
+    Result,
+    Value,
+    Write,
+};
 
 /// Fetches a user's followed artists from Spotify
 #[tokio::main]
-pub async fn user_artists(app: &mut App) -> Result<(), ClientError> {
+pub async fn user_artists(app: &mut App) -> Result<()> {
     // Get a Spotify client using an existing access token (if available).
     let spotify = get_spotify_client(app).await?;
 

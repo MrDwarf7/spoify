@@ -1,19 +1,31 @@
-extern crate rspotify;
-extern crate serde_json;
+use rspotify::prelude::*;
 
-use crate::app::App;
-use futures::{FutureExt, TryStreamExt};
-use regex::Regex;
-use rspotify::model::{AlbumId, SimplifiedTrack};
-use rspotify::{prelude::*, ClientCredsSpotify, ClientError, Credentials};
-use serde_json::{json, Value};
-use std::env;
-use std::fs::File;
-use std::io::{BufReader, Write};
-use std::path::PathBuf;
+use super::{
+    // get_spotify_client,
+    //
+    json,
+    AlbumId,
+    App,
+    BufReader,
+    ClientCredsSpotify,
+    Credentials,
+    File,
+    FutureExt,
+    // OAuthClient,
+    PathBuf,
+    // PlayHistory,
+    Regex,
+    Result,
+    SimplifiedTrack,
+    TryStreamExt,
+    Value,
+    Write,
+};
+
+// use crate::prelude::*;
 
 #[tokio::main]
-pub async fn user_album_tracks(app: &mut App) -> Result<(), ClientError> {
+pub async fn user_album_tracks(app: &mut App) -> Result<()> {
     let client_id = &app.client_id;
     let client_secret_id = &app.client_secret;
 
@@ -27,7 +39,7 @@ pub async fn user_album_tracks(app: &mut App) -> Result<(), ClientError> {
     let spotify = ClientCredsSpotify::new(creds);
 
     // Request an access token from Spotify
-    spotify.request_token().await.unwrap();
+    spotify.request_token().await?;
 
     // Collect tracks from the selected album
     let mut tracks = Vec::new();
@@ -48,13 +60,13 @@ pub async fn user_album_tracks(app: &mut App) -> Result<(), ClientError> {
 
     stream.await?;
 
-    save_tracks_to_json(app, tracks);
+    save_tracks_to_json(app, tracks)?;
 
     Ok(())
 }
 
 /// Saves a vector of simplified track data to a JSON file in the Spotify cache directory
-fn save_tracks_to_json(app: &mut App, items: Vec<SimplifiedTrack>) {
+fn save_tracks_to_json(app: &mut App, items: Vec<SimplifiedTrack>) -> Result<()> {
     let json_data = json!(items);
 
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -66,9 +78,10 @@ fn save_tracks_to_json(app: &mut App, items: Vec<SimplifiedTrack>) {
 
     let mut file = File::create(&path).unwrap();
     let _ = file.write_all(json_data.to_string().as_bytes());
+    Ok(())
 }
 
-pub fn process_user_album_tracks(app: &mut App) {
+pub fn process_user_album_tracks(app: &mut App) -> Result<()> {
     app.user_album_track_artist.clear();
     app.user_album_track_duration.clear();
     app.user_album_track_links.clear();
@@ -80,7 +93,7 @@ pub fn process_user_album_tracks(app: &mut App) {
     path.push("spotify_cache");
     path.push("user_album_tracks.json");
 
-    let file = File::open(&path).expect("Failed to open user_album_tracks.json");
+    let file = File::open(&path)?;
     let reader = BufReader::new(file);
     let json_data: Value =
         serde_json::from_reader(reader).expect("Failed to parse user_album_tracks.json");
@@ -98,7 +111,7 @@ pub fn process_user_album_tracks(app: &mut App) {
                 // Extract first artist name
                 if let Some(artists) = track_obj.get("artists").and_then(|v| v.as_array()) {
                     if !artists.is_empty() {
-                        if let Some(first_artist) = artists.get(0).and_then(|v| v.as_object()) {
+                        if let Some(first_artist) = artists.first().and_then(|v| v.as_object()) {
                             if let Some(artist_name) =
                                 first_artist.get("name").and_then(|v| v.as_str())
                             {
@@ -124,4 +137,5 @@ pub fn process_user_album_tracks(app: &mut App) {
             }
         }
     }
+    Ok(())
 }

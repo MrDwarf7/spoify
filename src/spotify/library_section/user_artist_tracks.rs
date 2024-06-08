@@ -1,18 +1,25 @@
-extern crate rspotify;
-extern crate serde_json;
+use rspotify::prelude::*;
+// use std::env;
 
-use crate::app::App;
-use regex::Regex;
-use rspotify::model::{ArtistId, FullTrack};
-use rspotify::{prelude::*, ClientCredsSpotify, ClientError, Credentials};
-use serde_json::{json, Value};
-use std::env;
-use std::fs::File;
-use std::io::{BufReader, Write};
-use std::path::PathBuf;
+use super::{
+    //
+    json,
+    App,
+    ArtistId,
+    BufReader,
+    ClientCredsSpotify,
+    Credentials,
+    File,
+    FullTrack,
+    PathBuf,
+    Regex,
+    Result,
+    Value,
+    Write,
+};
 
 #[tokio::main]
-pub async fn user_artist_tracks(app: &mut App) -> Result<(), ClientError> {
+pub async fn user_artist_tracks(app: &mut App) -> Result<()> {
     let client_id = &app.client_id;
     let client_secret_id = &app.client_secret;
 

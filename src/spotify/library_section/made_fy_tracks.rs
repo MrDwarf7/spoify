@@ -1,22 +1,27 @@
 // Fetches tracks from a user's selected Spotify playlist and stores information for display
 
-use crate::app::App;
-use crate::spotify::auth::get_spotify_client;
-use futures::FutureExt;
-use futures_util::TryStreamExt;
-use regex::Regex;
-use rspotify::model::{PlaylistId, PlaylistItem};
-use rspotify::prelude::BaseClient;
-use rspotify::ClientError;
-use serde_json::{json, Value};
-use std::env;
-use std::fs::File;
-use std::io::{BufReader, Write};
-use std::path::PathBuf;
+use super::{
+    get_spotify_client,
+    json,
+    App,
+    BaseClient,
+    //
+    BufReader,
+    File,
+    FutureExt,
+    PathBuf,
+    PlaylistId,
+    PlaylistItem,
+    Regex,
+    Result,
+    TryStreamExt,
+    Value,
+    Write,
+};
 
 /// Fetches playlist tracks from Spotify
 #[tokio::main]
-pub async fn fetch_made_fy_tracks(app: &mut App) -> Result<(), ClientError> {
+pub async fn fetch_made_fy_tracks(app: &mut App) -> Result<()> {
     // Get a Spotify client using an existing access token (if available).
     let spotify = get_spotify_client(app).await?;
 

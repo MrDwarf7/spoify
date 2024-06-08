@@ -1,19 +1,23 @@
-use std::fs::File;
-use std::io::{BufReader, Write};
-use std::path::PathBuf;
-
-use crate::app::App;
-use crate::spotify::auth::get_spotify_client;
-use futures::FutureExt;
-use futures_util::TryStreamExt;
-use rspotify::clients::BaseClient;
-use rspotify::model::SimplifiedPlaylist;
-use rspotify::ClientError;
-use serde_json::{json, Value};
+use super::{
+    get_spotify_client,
+    json,
+    App,
+    BaseClient,
+    BufReader,
+    File,
+    FutureExt,
+    PathBuf,
+    //
+    Result,
+    SimplifiedPlaylist,
+    TryStreamExt,
+    Value,
+    Write,
+};
 
 /// Fetches a user's liked songs from Spotify
 #[tokio::main]
-pub async fn made_fy(app: &mut App) -> Result<(), ClientError> {
+pub async fn made_fy(app: &mut App) -> Result<()> {
     // Get a Spotify client using an existing access token (if available).
     let spotify = get_spotify_client(app).await?;
 
