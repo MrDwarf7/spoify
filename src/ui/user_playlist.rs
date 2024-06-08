@@ -11,7 +11,7 @@ use super::util::{convert_to_list, track_table_ui};
 
 /// Renders the user playlist UI section, including playlist selection list and track table
 pub fn render_user_playlist(f: &mut Frame, content_chunk: &[Rect], app: &mut App) {
-    let current_playlist_name = (&app.current_user_playlist).to_string();
+    let current_playlist_name = (app.current_user_playlist).to_string();
 
     let playlist_block_user = Block::default()
         .borders(Borders::ALL)
