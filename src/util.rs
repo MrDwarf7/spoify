@@ -1,7 +1,3 @@
-extern crate serde_json;
-extern crate serde_yaml;
-extern crate yaml_rust;
-
 use crate::app::App;
 use crate::settings::keybindings::{parse_keybindings, read_keybindings, set_keybindings};
 use crate::settings::theme::{read_theme, set_theme};
