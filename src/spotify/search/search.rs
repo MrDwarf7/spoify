@@ -4,9 +4,6 @@ stores the search results in json files
 reads the json file and store the data in required variables
 */
 
-extern crate rspotify;
-extern crate serde_json;
-
 use rspotify::{
     model::{Country, Market, SearchType},
     prelude::*,

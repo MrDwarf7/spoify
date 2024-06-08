@@ -1,6 +1,3 @@
-extern crate rspotify;
-extern crate serde_json;
-
 use crate::app::App;
 use rspotify::model::{ArtistId, FullTrack};
 use rspotify::{prelude::*, ClientCredsSpotify, ClientError, Credentials};

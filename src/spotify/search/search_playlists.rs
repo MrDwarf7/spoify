@@ -1,6 +1,3 @@
-extern crate rspotify;
-extern crate serde_json;
-
 use crate::app::App;
 use futures::{FutureExt, TryStreamExt};
 use rspotify::model::{PlaylistId, PlaylistItem};
